@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 20% 1fr;
+            grid-template-rows: 15% 85%;
+            grid-template-areas:
+                "sidebar header"
+                "sidebar content"
+            ;
+        }
+
+        header {
+            /* 这里不需要字符串“header” */
+            grid-area: header;
+            background-color: white;
+            /* grid-column: 2/3;
+            grid-row: 1/2; */
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        aside {
+            grid-area: sidebar;
+            background-color: #38bdf8;
+            /* grid-column: 1/2;
+            grid-row: 1/3; */
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 100px auto 1fr;
+        }
+
+        main {
+            grid-area: content;
+            background-color: lightblue;
+            display: flex;
+            flex-direction: row;
+            padding-top: 20px;
+            padding-left: 16px;
+            padding-bottom: 40px;
+        }
+
+        .dashboard-item {
+            display: flex;
+            /* background-color: rebeccapurple; */
+            flex-direction: row;
+            align-items: center;
+            margin: 16px;
+        }
+
+        .dashboard-item>img {
+            width: 24px;
+            height: 24px;
+            margin-right: 16px;
+        }
+
+        .dashboard-item>img#dashboard {
+            width: 36px;
+            height: 36px;
+        }
+
+        .sidebar-group1 {
+            /* background-color: aquamarine; */
+        }
+
+        .sidebar-group2 {
+            /* background-color: goldenrod; */
+        }
+
+        .header-row1 {
+            display: flex;
+            flex-basis: 60px;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .search {
+            display: flex;
+            flex: 1;
+        }
+
+        .search>img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .search>input {
+            background-color: gainsboro;
+            height: 30px;
+            border-width: 0px;
+            border-radius: 15px;
+            flex: 1;
+        }
+
+        .header-row2 {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .info {
+            display: flex;
+            width: 300px;
+            margin-left: 100px;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info>div {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 36px;
+        }
+
+        #clock img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-row2>#user img {
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+            margin-right: 16px;
+        }
+
+        #user {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+        }
+
+        #textUser {
+            margin: auto;
+        }
+
+        #menu {
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        #menu button {
+            border: none;
+            width: 80px;
+            color: white;
+            padding: 8px 0px;
+            margin-left: 20px;
+            border-radius: 16px;
+            background-color: #38bdf8;
+        }
+
+        #left-content {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #right-content {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        #grid-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+            margin-top: 10px;
+        }
+
+        .grid-item-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px 12px;
+            border-left: gold solid 8px;
+        }
+
+        #item-content-ops {
+            display: flex;
+            margin-top: 10px;
+            justify-content: flex-end;
+        }
+
+        #item-content-ops a {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        #item-content-ops img {
+            width: 24px;
+            height: 24px;
+        }
+
+        #announceItemList {
+            margin-top: 10px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 0px 20px;
+        }
+
+        .listItem {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid gainsboro;
+        }
+
+        #announceItemList .listItem:last-child {
+            border-width: 0px;
+        }
+
+        #trendingItemList .listItem:last-child {
+            border-width: 0px;
+        }
+
+        .right-content-item {
+            flex: 1;
+            margin-top: 40px;
+        }
+
+        #trendingItemList {
+            margin-top: 10px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 0px 20px;
+        }
+
+        div.listItem.trending {
+            display: flex;
+        }
+
+        .listItem img {
+            width: 48px;
+            height: 48px;
+            margin-right: 10px;
+            border-radius: 48px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="dashboard-item">
+                <img id="dashboard" src="img/view-dashboard.svg" alt=""><span>Dashboard</span>
+            </div>
+            <div class="sidebar-group1">
+                <div class="dashboard-item">
+                    <img src="img/home.svg" alt=""><span>Home</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/profile.svg" alt=""><span>Profile</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/message.svg" alt=""><span>Messages</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/history.svg" alt=""><span>History</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/tasks.svg" alt=""><span>Tasks</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/communities.svg" alt=""><span>Communities</span>
+                </div>
+            </div>
+            <div class="sidebar-group2">
+                <div class="dashboard-item">
+                    <img src="img/settings.svg" alt=""><span>Settings</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/support.svg" alt=""><span>Support</span>
+                </div>
+                <div class="dashboard-item">
+                    <img src="img/privacy.svg" alt=""><span>Privacy</span>
+                </div>
+            </div>
+        </aside>
+        <header>
+            <div class="header-row1">
+                <div class="search">
+                    <img src="img/search.svg" alt=""><input type="text">
+                </div>
+                <div class="info">
+                    <div id="clock">
+                        <img src="img/alarm.svg" alt="">
+                    </div>
+                    <div>
+                        <img src="img/6.jpg" alt="">
+                    </div>
+                    <div>
+                        <span>Json Yang</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-row2">
+                <div id="user">
+                    <img src="img/6.jpg" alt="">
+                    <div id="textUser">
+                        <span>Hi there,</span>
+                        <p>Json Yang（@morgan）</p>
+                    </div>
+                </div>
+                <div id="menu">
+                    <button>New</button>
+                    <button>Upload</button>
+                    <button>Share</button>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div id="left-content">
+                <h3>Your projects</h3>
+                <div id="grid-content">
+                    <div class="grid-item-content">
+                        <h3>Supper cool app</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="grid-item-content">
+                        <h3>Good app</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="grid-item-content">
+                        <h3>project 3</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="grid-item-content">
+                        <h3>project 4</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="grid-item-content">
+                        <h3>project 5</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="grid-item-content">
+                        <h3>project 6</h3>
+                        <p>
+                            Yay, you did it! We made it through the parent properties. Up next, let dig into the
+                            child
+                            properties. Take a breather
+                            today, tomorrow we go full speed again
+                        </p>
+                        <div id="item-content-ops">
+                            <a href="#"><img src="img/love.svg" alt=""></a>
+                            <a href="#"><img src="img/eye-plus.svg" alt=""></a>
+                            <a href="#"><img src="img/share.svg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="right-content">
+                <div class="right-content-item">
+                    <h3>Announcements</h3>
+                    <div id="announceItemList">
+                        <div class="listItem">
+                            <h3>Site maintenane</h3>
+                            <p>
+                                You’ll learn the 3 properties that are defined by the flex shorthand, and how to use
+                                them
+                                individually.
+                            </p>
+                        </div>
+
+                        <div class="listItem">
+                            <h3>Site maintenane</h3>
+                            <p>
+                                You’ll learn the 3 properties that are defined by the flex shorthand, and how to use
+                                them
+                                individually.
+                            </p>
+                        </div>
+
+                        <div class="listItem">
+                            <h3>Site maintenane</h3>
+                            <p>
+                                You’ll learn the 3 properties that are defined by the flex shorthand, and how to use
+                                them
+                                individually.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content-item">
+                    <h3>Trending</h3>
+                    <div id="trendingItemList">
+                        <div class="listItem trending">
+                            <img src="img/6.jpg" alt="">
+                            <div>
+                                <h3>@tegdf</h3>
+                                <p>
+                                    World Builder
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="listItem trending">
+                            <img src="img/6.jpg" alt="">
+                            <div>
+                                <h3>@tegdf</h3>
+                                <p>
+                                    World Builder
+                                </p>
+                            </div>
+                        </div>
+                        <div class="listItem trending">
+                            <img src="img/6.jpg" alt="">
+                            <div>
+                                <h3>@tegdf</h3>
+                                <p>
+                                    World Builder
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
